@@ -1,0 +1,13 @@
+<div *ngIf="selectedEmployee !== undefined" class="employee-details">
+    <h3>The details for this employee are: </h3>
+    <p>ID: {{selectedEmployee.Id}}</p>
+    <p>Name: {{selectedEmployee.name}}</p>
+    <p>Address: {{selectedEmployee.address}}</p>
+    <p>Year Joined: {{selectedEmployee.joiningYear}}</p>
+
+
+    <div class="buttons">
+        <app-button text="Previous" color="red" (btnClick)="previous(selectedEmployee)"></app-button>
+        <app-button text="Next" color="red" (btnClick)="next(selectedEmployee)"></app-button>
+    </div>
+</div>

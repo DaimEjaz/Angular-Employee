@@ -1,0 +1,10 @@
+.navbar{
+    justify-self: flex-start;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+#exampleModalLabel{
+    color: black;
+}

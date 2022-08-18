@@ -1,0 +1,17 @@
+#exampleModalLabel{
+    color: black;
+}
+
+.row{
+    border: none;
+    display: flex;
+    justify-content: space-between;
+}
+
+.nameSpan{
+    justify-self: flex-start;
+}
+
+.btnSpan{
+    justify-self: flex-end;
+}

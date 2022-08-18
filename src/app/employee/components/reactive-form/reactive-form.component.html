@@ -1,0 +1,27 @@
+<form
+[formGroup]="updateForm"
+
+(ngSubmit)="submit()"
+>
+<div class="form-control">
+  <label for="">Name</label>
+  <input type="text" formControlName="name" />
+</div>
+<div class="form-control">
+  <label for="">Address</label>
+  <input type="text" formControlName="address" />
+</div>
+<div class="form-control">
+  <label for="">Joining Year</label>
+  <input type="text" formControlName="joiningYear" />
+</div>
+
+<app-button
+  aria-disabled="updateForm.invalid || updateForm.istouched"
+  text={{btnText}}
+></app-button>
+<app-button text="Close" data-dismiss="modal" (btnClick)="clear()"></app-button>
+</form>
+
+
+<!-- [hidden]="this.success" -->

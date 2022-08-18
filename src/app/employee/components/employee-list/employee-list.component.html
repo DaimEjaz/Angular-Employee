@@ -1,0 +1,62 @@
+<div class="list">
+  <!-- <app-modal modalId="updateModal" [show]="this.updateClicked"></app-modal> -->
+
+  <h2>Employee List:</h2>
+
+  <!-- <ul class="employee-list" *ngFor="let employee of employees$">
+    <li (click)="empClick(employee)">{{employee.name}}</li>
+</ul> -->
+  <table class="table">
+    <thead></thead>
+    <tbody class="employee-list" *ngFor="let employee of employees$">
+      <tr class="row">
+        <span class="nameSpan" (click)="empClick(employee)">{{
+          employee.name
+        }}</span>
+        <span class="btnSpan">
+          <app-button
+            text="Update"
+            color="green"
+            data-toggle="modal"
+            data-target="#exampleModal"
+            (btnClick)="emp(employee)"
+          ></app-button>
+          <app-button
+            text="Delete"
+            color="red"
+            (btnClick)="deleteEmp(employee)"
+          ></app-button>
+        </span>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">{{modalTitle}} Employee</h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <app-reactive-form [btnText]="this.modalTitle" [currEmployee]="this.currentEmp"></app-reactive-form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
