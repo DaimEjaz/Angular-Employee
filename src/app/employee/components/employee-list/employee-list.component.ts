@@ -24,8 +24,8 @@ export class EmployeeListComponent implements OnInit {
   constructor(private employeeListService : EmployeeListService, public activeModal: NgbActiveModal, private modalService: NgbModal) { }
 
   ngOnInit(): void {
-    //this.employeeListService.getEmployees().subscribe(data => this.employees$ = data);
-    this.employees$ = this.employeeListService.getEmployees();
+    this.employeeListService.getEmployees().subscribe(data => this.employees$ = data);
+    //this.employees$ = this.employeeListService.getEmployees();
     console.log(this.employees$);
   }
 
@@ -39,12 +39,16 @@ export class EmployeeListComponent implements OnInit {
   }
 
   deleteEmp(employee: Employee){
-    alert("Delete")
+    this.employeeListService.deleteEmployee(employee.id).subscribe(() =>  this.employeeListService.getEmployees().subscribe(data => this.employees$ = data));
 
   }
   emp(employee: Employee){
     this.currentEmp = employee;
     this.modalTitle = "Update"
+  }
+
+  refreshList(empList : Employee[]){
+    this.employees$ = empList;
   }
 
   openBackDropCustomClass(content: any) {

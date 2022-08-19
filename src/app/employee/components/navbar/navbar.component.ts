@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { EmployeeListService } from '../../services/employee-list.service';
 
 @Component({
   selector: 'app-navbar',
@@ -9,7 +10,7 @@ export class NavbarComponent implements OnInit {
 
   modalTitle!: string;
 
-  constructor() { }
+  constructor(private service: EmployeeListService) { }
 
   ngOnInit(): void {
   }
@@ -17,7 +18,7 @@ export class NavbarComponent implements OnInit {
   addNew(){
     this.modalTitle = "Add New"
 
-    //Call service
+    
   }
 
 }

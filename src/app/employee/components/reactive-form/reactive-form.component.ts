@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Employee } from '../../models/employee';
@@ -20,11 +20,20 @@ export class ReactiveFormComponent implements OnInit {
  @Input() currEmployee!: Employee;
  @Input() btnText!: string;
 
+ @Output() updated = new EventEmitter<Employee[]>();
+
+ employees$!: Employee[];
+
 
  updateForm !: FormGroup;
  constructor(private fb : FormBuilder, private service: EmployeeListService, public activeModal: NgbActiveModal ) { }
 
  ngOnInit(): void {
+
+  //************Employee list, not working since not working with db**************************//
+  this.service.getEmployees().subscribe(data => this.employees$ = data);
+
+
    //Schema for form data
    this.updateForm = this.fb.group({
      name : ['', [
@@ -48,22 +57,46 @@ export class ReactiveFormComponent implements OnInit {
  }
 
  async submit(){
-  if(this.updateForm.valid){
-    this.loading = true;
-    const formValues = this.updateForm.value;
- 
-    try {
-      this.service.updateEmployee(this.currEmployee.Id, formValues.name, formValues.address, formValues.joiningYear);
-      this.success = true;
-      console.log(formValues.name);
-      alert(this.updateForm.value.name.valid);
-    } catch (error) {
-      console.error(error); 
+
+  if(this.btnText == 'Update'){
+
+    if(this.updateForm.valid){
+      // this.loading = true;
+      const formValues = this.updateForm.value;
+   
+      try {
+        this.service.updateEmployee(this.currEmployee.id, formValues.name, formValues.address, formValues.joiningYear)
+        .subscribe(() => this.service.getEmployees().subscribe(data => {
+          this.employees$ = data;
+          this.updated.emit(this.employees$);
+
+        }));
+        // this.success = true;
+      } catch (error) {
+        console.error(error); 
+      }
+   
+      // this.loading = false;
+    }else{
+      alert("Some info is missing or wrong!")
     }
- 
-    this.loading = false;
-  }else{
-    alert("Some info is missing")
+  }
+
+  else if(this.btnText == 'Add New'){
+    //Call service for adding new employee
+
+    const formValues = this.updateForm.value;
+
+    if(this.updateForm.valid){
+      try {
+        this.service.addEmployee(1, formValues.name, formValues.address, formValues.joiningYear).subscribe(() =>  this.service.getEmployees().subscribe(data => this.employees$ = data));
+        alert("Added successfully into database");
+      } catch (error) {
+        console.error(error); 
+      }
+    }else{
+      alert("Some info is missing or wrong!")
+    }
   }
    
  }

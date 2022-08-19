@@ -54,7 +54,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <app-reactive-form [btnText]="this.modalTitle" [currEmployee]="this.currentEmp"></app-reactive-form>
+          <app-reactive-form [btnText]="this.modalTitle" [currEmployee]="this.currentEmp" (updated)="refreshList($event)"></app-reactive-form>
         </div>
       </div>
     </div>
